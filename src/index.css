@@ -118,9 +118,6 @@ button {
   align-items: center;
 }
 
-.pageContainer{
-  margin-bottom: 10rem;
-}
 
 .loadingSpinner {
   width: 64px;
@@ -137,6 +134,10 @@ button {
   100% {
     transform: rotate(360deg);
   }
+}
+
+.pageContainer{
+  margin-bottom: 10rem;
 }
 
 .pageHeader {

@@ -1,6 +1,12 @@
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
-import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth"
+import {toast} from "react-toastify"
+import {
+   getAuth,
+   createUserWithEmailAndPassword,
+   updateProfile,
+} from "firebase/auth"
+import { setDoc, doc, serverTimestamp } from "firebase/firestore"
 import { ReactComponent as ArrowRightIcon } from "../assets/svg/keyboardArrowRightIcon.svg"
 import { db } from "../firebase.config"
 import visibilityIcon from "../assets/svg/visibilityIcon.svg"
@@ -42,9 +48,17 @@ function SignUp() {
             displayName: name,
          })
 
+         // Copy data from formData to formDataCopy, delete from it password, so only username and email is left and then adding timestamp from function serverTimestamp() imported from firebase
+         const formDataCopy = { ...formData }
+         delete formDataCopy.password
+         formDataCopy.timestamp = serverTimestamp()
+
+         // setDoc is creating and updating database and adding user to the users collection (name, email, uid)
+         await setDoc(doc(db, "users", user.uid), formDataCopy)
+
          navigate("/")
       } catch (error) {
-         console.log(error)
+         toast.error("Something went wrong with registration")
       }
    }
 
