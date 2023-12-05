@@ -7,6 +7,7 @@ import {
    getDownloadURL,
 } from "firebase/storage"
 import { db } from "../firebase.config"
+import { addDoc, collection, serverTimestamp } from "firebase/firestore"
 import { v4 as uuidv4 } from "uuid"
 import { useNavigate } from "react-router-dom"
 import Spinner from "../components/Spinner"
@@ -23,7 +24,7 @@ function CreateListing() {
       parking: false,
       furnished: false,
       address: "",
-      offers: false,
+      offer: false,
       regularPrice: 0,
       discountedPrice: 0,
       images: {},
@@ -45,7 +46,6 @@ function CreateListing() {
       images,
       latitude,
       longitude,
-      userRef,
    } = formData
 
    const auth = getAuth()
@@ -99,10 +99,9 @@ function CreateListing() {
 
          const data = await response.json()
 
-         geolocation.lat = data.results[0]?.geometry.location.lat ?? 0 // [0]? required (error - null)
+         geolocation.lat = data.results[0]?.geometry.location.lat ?? 0
          geolocation.lng = data.results[0]?.geometry.location.lng ?? 0
 
-         // correct address will be formated, incorrect undefined (toast.error)
          location =
             data.status === "ZERO_RESULTS"
                ? undefined
@@ -116,7 +115,6 @@ function CreateListing() {
       } else {
          geolocation.lat = latitude
          geolocation.lng = longitude
-         location = address
       }
 
       // Store images in firebase
@@ -172,10 +170,25 @@ function CreateListing() {
          return
       })
 
-      console.log(imgUrls)
+      // (Form data + geolocation + timestamp) add to the database
+      const formDataCopy = {
+         ...formData,
+         imgUrls,
+         geolocation,
+         timestamp: serverTimestamp(),
+      }
 
+      formDataCopy.location = address
+      delete formDataCopy.images
+      delete formDataCopy.address
+      !formDataCopy.offer && delete formDataCopy.discountedPrice
+
+      const docRef = await addDoc(collection(db, "listings"), formDataCopy)
       setLoading(false)
+      toast.success("Listing saved")
+      navigate(`/category/${formDataCopy.type}/${docRef.id}`)
    }
+   
 
    const onMutate = (e) => {
       let boolean = null

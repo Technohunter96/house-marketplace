@@ -10,25 +10,22 @@ function ListingItem({ listing, id, onDelete }) {
             to={`/category/${listing.type}/${id}`}
             className="categoryListingLink"
          >
-            {listing.imgUrls && listing.imgUrls.length > 0 ? (
-               <img
-                  src={listing.imgUrls[0]}
-                  alt={listing.name}
-                  className="categoryListingImg"
-               />
-            ) : (
-               <p>No image available</p>
-            )}
+            <img
+               src={listing.imgUrls[0]}
+               alt={listing.name}
+               className="categoryListingImg"
+            />
             <div className="categoryListingDetails">
                <p className="categoryListingLocation">{listing.location}</p>
                <p className="categoryListingName">{listing.name}</p>
+
                <p className="categoryListingPrice">
                   $
                   {listing.offer
                      ? listing.discountedPrice
                           .toString()
                           .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                     : listing.discountedPrice
+                     : listing.regularPrice
                           .toString()
                           .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                   {listing.type === "rent" && " / Month"}
@@ -53,7 +50,7 @@ function ListingItem({ listing, id, onDelete }) {
          {onDelete && (
             <DeleteIcon
                className="removeIcon"
-               fill="rgb(231, 66, 60)"
+               fill="rgb(231, 76,60)"
                onClick={() => onDelete(listing.id, listing.name)}
             />
          )}
