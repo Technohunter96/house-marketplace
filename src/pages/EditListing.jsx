@@ -7,18 +7,14 @@ import {
    getDownloadURL,
 } from "firebase/storage"
 import { db } from "../firebase.config"
-import {
-   doc,
-   updateDoc,
-   getDoc,
-   serverTimestamp,
-} from "firebase/firestore"
+import { doc, updateDoc, getDoc, serverTimestamp } from "firebase/firestore"
 import { v4 as uuidv4 } from "uuid"
 import { useNavigate, useParams } from "react-router-dom"
 import Spinner from "../components/Spinner"
 import { toast } from "react-toastify"
 
 function EditListing() {
+    // eslint-disable-next-line
    const [geolocationEnabled, setGeolocationEnabled] = useState(true)
    const [loading, setLoading] = useState(false)
    const [listing, setListing] = useState(false)
@@ -61,10 +57,11 @@ function EditListing() {
 
    // Redirect if listing is not users's
    useEffect(() => {
-    if(listing && listing.userRef !== auth.currentUser.uid) {
-        toast.error("You cannot edit that listing")
-        navigate("/")
-    }
+      if (listing && listing.userRef !== auth.currentUser.uid) {
+         toast.error("You cannot edit that listing")
+         navigate("/")
+      }
+      // eslint-disable-next-line
    }, [])
 
    // Fetch listing to edit - předvyplnění editu dle dat z databáze na základě id dokumentu
@@ -75,7 +72,7 @@ function EditListing() {
          const docSnap = await getDoc(docRef)
          if (docSnap.exists()) {
             setListing(docSnap.data())
-            setFormData({...docSnap.data(), address: docSnap.data().location}) // doplnění
+            setFormData({ ...docSnap.data(), address: docSnap.data().location }) // doplnění
             setLoading(false)
          } else {
             navigate("/")
@@ -85,7 +82,6 @@ function EditListing() {
 
       fetchListing()
    }, [params.listingId, navigate])
-
 
    // Sets userRef to logged in user
    useEffect(() => {
@@ -103,7 +99,7 @@ function EditListing() {
          // cleanUp function
          isMounted.current = false
       }
-      //   eslint-disable-next-line react-hooks/exhaustive-deps
+      // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [isMounted])
 
    const onSubmit = async (e) => {
@@ -177,8 +173,6 @@ function EditListing() {
                         console.log("Upload is running")
                         break
                      default:
-                        // Default case for handling other states
-                        console.log("Handling other states")
                         break
                   }
                },
