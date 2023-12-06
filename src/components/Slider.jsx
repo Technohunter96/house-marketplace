@@ -31,11 +31,7 @@ function Slider() {
                data: doc.data(),
             })
          })
-         listings.forEach(({ data }) => {
-            data.imgUrls.forEach(imgUrl => {
-               console.log(imgUrl);
-            });
-         });
+         
          setListings(listings)
          setLoading(false)
       }
@@ -64,8 +60,9 @@ function Slider() {
                   >
                      <div
                         style={{
-                           background: `url(${data.imgUrls[0]}) center no-repeat`,
+                           background: `url(${data.imgUrls[1]}) center no-repeat`,
                            backgroundSize: "cover",
+                           minHeight: "28rem",
                         }}
                         className="swiperSlideDiv"
                      >

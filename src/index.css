@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800;900&display=swap');
+
 * {
   box-sizing: border-box;
 }
@@ -41,7 +42,9 @@ button {
   padding: 0 3rem;
   font-size: 1rem;
 }
+
 @media (min-width: 1100px) {
+
   .input,
   .passwordInput,
   .emailInput,
@@ -79,11 +82,29 @@ button {
   right: -2%;
 }
 
+@media (max-width: 590px) {
+  .removeIcon {
+    cursor: pointer;
+    position: absolute;
+    top: 52%;
+    right: -2%;
+  }
+}
+
 .editIcon {
   cursor: pointer;
   position: absolute;
   top: -3.4%;
   right: 20px;
+}
+
+@media (max-width: 590px) {
+  .editIcon {
+    cursor: pointer;
+    position: absolute;
+    top: 52%;
+    right: 20px;
+  }
 }
 
 .pageContainer,
@@ -94,7 +115,9 @@ button {
 .explore {
   margin: 1rem;
 }
+
 @media (min-width: 1024px) {
+
   .pageContainer,
   .offers,
   .profile,
@@ -127,16 +150,18 @@ button {
   border-radius: 50%;
   animation: spin 1.2s linear infinite;
 }
+
 @keyframes spin {
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }
 }
 
-.pageContainer{
+.pageContainer {
   margin-bottom: 10rem;
 }
 
@@ -186,6 +211,7 @@ button {
   font-weight: 600;
   color: #8f8f8f;
 }
+
 .navbarListItemNameActive {
   color: #2c2c2c;
 }
@@ -239,7 +265,9 @@ button {
 .signUpText {
   cursor: pointer;
 }
+
 @media (min-width: 1024px) {
+
   .signInBar,
   .signUpBar {
     justify-content: start;
@@ -262,7 +290,9 @@ button {
   background-color: #00cc66;
   border-radius: 50%;
 }
+
 @media (min-width: 1024px) {
+
   .signInButton,
   .signUpButton {
     margin-left: 3rem;
@@ -307,6 +337,7 @@ button {
     margin-bottom: 10rem;
   }
 }
+
 @media (max-height: 536px) {
   .explore {
     margin-bottom: 10rem;
@@ -353,6 +384,7 @@ button {
   background-color: rgba(0, 0, 0, 0.8);
   padding: 0.5rem;
 }
+
 @media (min-width: 1024px) {
   .swiperSlideText {
     font-size: 1.75rem;
@@ -370,6 +402,7 @@ button {
   padding: 0.25rem 0.5rem;
   border-radius: 1rem;
 }
+
 @media (min-width: 1024px) {
   .swiperSlidePrice {
     font-size: 1.25rem;
@@ -380,6 +413,7 @@ button {
   display: flex;
   justify-content: space-between;
 }
+
 .exploreCategories a {
   width: 48%;
 }
@@ -424,6 +458,7 @@ button {
   border-radius: 1.5rem;
   object-fit: cover;
 }
+
 @media (min-width: 1024px) {
   .categoryListingImg {
     width: 19%;
@@ -434,6 +469,7 @@ button {
 .categoryListingDetails {
   width: 65%;
 }
+
 @media (min-width: 1024px) {
   .categoryListingDetails {
     width: 79%;
@@ -543,6 +579,7 @@ button {
   padding: 0;
   list-style-type: none;
 }
+
 .listingDetailsList li {
   margin: 0.3rem 0;
   font-weight: 500;
@@ -561,6 +598,7 @@ button {
   overflow-x: hidden;
   margin-bottom: 3rem;
 }
+
 @media (min-width: 1024px) {
   .leafletContainer {
     height: 400px;
@@ -676,6 +714,7 @@ button {
   font-weight: 600;
   width: 100%;
 }
+
 .profileNameActive {
   background-color: rgba(44, 44, 44, 0.1);
 }
@@ -686,6 +725,7 @@ button {
 .profileEmailActive {
   font-weight: 500;
 }
+
 .profileEmailActive {
   background-color: rgba(44, 44, 44, 0.1);
 }
@@ -712,8 +752,8 @@ button {
   font-weight: 600;
 }
 
-.lisitingsList {
-  padding: 0;
+.listingsList {
+  padding: 0 0.4rem 0 0;
 }
 
 .formLabel {
@@ -743,6 +783,7 @@ button {
   justify-content: center;
   align-items: center;
 }
+
 .formButtonActive {
   background-color: #00cc66;
   color: #ffffff;
@@ -761,6 +802,7 @@ button {
   outline: none;
   font-family: 'Montserrat', sans-serif;
 }
+
 .formInputSmall,
 .formInputFile {
   margin-right: 3rem;
@@ -798,6 +840,7 @@ button {
 .formInputFile {
   width: 100%;
 }
+
 .formInputFile::-webkit-file-upload-button {
   background-color: #00cc66;
   border: none;
