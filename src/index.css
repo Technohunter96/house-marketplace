@@ -8,6 +8,20 @@ html::-webkit-scrollbar {
   display: none;
 }
 
+.signCard {
+  border: 2px solid #00cc66;
+  padding: 0.5rem 5rem;
+  border-radius: 1rem;
+  margin: 0 auto;
+  max-width: 50rem;
+}
+
+@media (max-width: 590px) {
+  .signCard {
+    padding: 0.5rem 2rem;
+  }
+}
+
 body {
   font-family: 'Montserrat', sans-serif;
   background-color: #f2f4f8;
@@ -252,7 +266,7 @@ button {
 
 .signInBar,
 .signUpBar {
-  margin-top: 3rem;
+  margin-top: 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -265,6 +279,13 @@ button {
 .signUpText {
   cursor: pointer;
 }
+
+.signInButton:hover,
+.signUpButton:hover {
+  transform: scale(1.03);
+}
+
+
 
 @media (min-width: 1024px) {
 
@@ -300,7 +321,7 @@ button {
 }
 
 .socialLogin {
-  margin-top: 4rem;
+  margin-top: 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -325,11 +346,15 @@ button {
 }
 
 .registerLink {
-  margin-top: 4rem;
+  margin-top: 2rem;
   color: #00cc66;
   font-weight: 600;
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
+}
+
+.registerLink:hover {
+  transform: scale(1.02);
 }
 
 @media (min-width: 1217px) {

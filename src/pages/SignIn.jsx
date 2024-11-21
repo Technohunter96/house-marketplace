@@ -1,111 +1,108 @@
-import { useState } from "react"
-import {toast} from "react-toastify"
-import { Link, useNavigate } from "react-router-dom"
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth"
-import OAuth from "../components/OAuth"
-import { ReactComponent as ArrowRightIcon } from "../assets/svg/keyboardArrowRightIcon.svg"
-import visibilityIcon from "../assets/svg/visibilityIcon.svg"
+import { useState } from "react";
+import { toast } from "react-toastify";
+import { Link, useNavigate } from "react-router-dom";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import OAuth from "../components/OAuth";
+import { ReactComponent as ArrowRightIcon } from "../assets/svg/keyboardArrowRightIcon.svg";
+import visibilityIcon from "../assets/svg/visibilityIcon.svg";
 
 function SignIn() {
-   const [showPassword, setShowPassword] = useState(false)
-   const [formData, setFormData] = useState({
-      email: "",
-      password: "",
-   })
+  const [showPassword, setShowPassword] = useState(false);
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
 
-   const { email, password } = formData
+  const { email, password } = formData;
 
-   const navigate = useNavigate()
+  const navigate = useNavigate();
 
-   const onChange = (e) => {
-      setFormData((prevState) => ({
-         ...prevState,
-         [e.target.id]: e.target.value, // podle id se funkce přepne buď na email nebo password a takto můžeme připsat do formData další věci a používat to stejně dokud v inputu bude id, které určí type inputu a tím pádem se bude ukládat do formData
-      }))
-   }
+  const onChange = (e) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      [e.target.id]: e.target.value, // podle id se funkce přepne buď na email nebo password a takto můžeme připsat do formData další věci a používat to stejně dokud v inputu bude id, které určí type inputu a tím pádem se bude ukládat do formData
+    }));
+  };
 
-   const onSubmit = async (e) => {
-      e.preventDefault()
+  const onSubmit = async (e) => {
+    e.preventDefault();
 
-      // Sign in authentication (registered and correct credentials)
-      try {
-         const auth = getAuth()
-         const userCredential = await signInWithEmailAndPassword(
-            auth,
-            email,
-            password
-         )
+    // Sign in authentication (registered and correct credentials)
+    try {
+      const auth = getAuth();
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
 
-         if (userCredential.user) { // if correct, then redirect
-            navigate("/")
-         }
-      } catch (error) {
-         toast.error("Bad User Credentials")
+      if (userCredential.user) {
+        // if correct, then redirect
+        navigate("/");
       }
-   }
+    } catch (error) {
+      toast.error("Bad User Credentials");
+    }
+  };
 
-   return (
-      <>
-         <div className="pageContainer">
-            <header>
-               <p className="pageHeader">Welcome Back!</p>
-            </header>
+  return (
+    <>
+      <div className="pageContainer">
+        <div className="signCard">
+          <header>
+            <p className="pageHeader">Welcome Back!</p>
+          </header>
 
-            <main>
-               <form onSubmit={onSubmit}>
-                  <input
-                     type="email"
-                     className="emailInput"
-                     placeholder="Email"
-                     id="email"
-                     value={email}
-                     onChange={onChange}
-                  />
+          <main>
+            <form onSubmit={onSubmit}>
+              <input
+                type="email"
+                className="emailInput"
+                placeholder="Email"
+                id="email"
+                value={email}
+                onChange={onChange}
+              />
 
-                  <div className="passwordInputDiv">
-                     <input
-                        type={showPassword ? "text" : "password"}
-                        className="passwordInput"
-                        placeholder="Password"
-                        id="password"
-                        value={password}
-                        onChange={onChange}
-                     />
-                     <img
-                        src={visibilityIcon}
-                        alt="show password"
-                        className="showPassword"
-                        onClick={() =>
-                           setShowPassword((prevState) => !prevState)
-                        }
-                     />
-                  </div>
+              <div className="passwordInputDiv">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  className="passwordInput"
+                  placeholder="Password"
+                  id="password"
+                  value={password}
+                  onChange={onChange}
+                />
+                <img
+                  src={visibilityIcon}
+                  alt="show password"
+                  className="showPassword"
+                  onClick={() => setShowPassword((prevState) => !prevState)}
+                />
+              </div>
 
-                  <Link to="/forgot-password" className="forgotPasswordLink">
-                     Forgot Password
-                  </Link>
+              <Link to="/forgot-password" className="forgotPasswordLink">
+                Forgot Password
+              </Link>
 
-                  <div className="signInBar">
-                     <p className="signInText">Sign In</p>
-                     <button className="signInButton">
-                        <ArrowRightIcon
-                           fill="#ffffff"
-                           width="34px"
-                           height="34px"
-                        />
-                     </button>
-                  </div>
-               </form>
+              <div className="signInBar">
+                <p className="signInText">Sign In</p>
+                <button className="signInButton">
+                  <ArrowRightIcon fill="#ffffff" width="34px" height="34px" />
+                </button>
+              </div>
+            </form>
 
-               <OAuth />
+            <OAuth />
 
-               <Link to="/sign-up" className="registerLink">
-                  Sign Up Instead
-               </Link>
-            </main>
-         </div>
-      </>
-   )
+            <Link to="/sign-up" className="registerLink">
+              Sign Up Instead
+            </Link>
+          </main>
+        </div>
+      </div>
+    </>
+  );
 }
 
-export default SignIn
+export default SignIn;

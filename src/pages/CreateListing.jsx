@@ -53,6 +53,7 @@ function CreateListing() {
    const navigate = useNavigate()
    const isMounted = useRef(true)
 
+   // Sets userRef to logged in user
    useEffect(() => {
       if (isMounted) {
          onAuthStateChanged(auth, (user) => {
@@ -113,6 +114,7 @@ function CreateListing() {
             toast.error("Please enter a correct address")
             return
          }
+         
       } else {
          geolocation.lat = latitude
          geolocation.lng = longitude

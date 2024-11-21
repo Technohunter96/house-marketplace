@@ -1,139 +1,135 @@
-import { useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
-import {toast} from "react-toastify"
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import {
-   getAuth,
-   createUserWithEmailAndPassword,
-   updateProfile,
-} from "firebase/auth"
-import { setDoc, doc, serverTimestamp } from "firebase/firestore"
-import OAuth from "../components/OAuth"
-import { ReactComponent as ArrowRightIcon } from "../assets/svg/keyboardArrowRightIcon.svg"
-import { db } from "../firebase.config"
-import visibilityIcon from "../assets/svg/visibilityIcon.svg"
+  getAuth,
+  createUserWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
+import { setDoc, doc, serverTimestamp } from "firebase/firestore";
+import OAuth from "../components/OAuth";
+import { ReactComponent as ArrowRightIcon } from "../assets/svg/keyboardArrowRightIcon.svg";
+import { db } from "../firebase.config";
+import visibilityIcon from "../assets/svg/visibilityIcon.svg";
 
 function SignUp() {
-   const [showPassword, setShowPassword] = useState(false)
-   const [formData, setFormData] = useState({
-      name: "",
-      email: "",
-      password: "",
-   })
+  const [showPassword, setShowPassword] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
 
-   const { name, email, password } = formData
+  const { name, email, password } = formData;
 
-   const navigate = useNavigate()
+  const navigate = useNavigate();
 
-   const onChange = (e) => {
-      setFormData((prevState) => ({
-         ...prevState,
-         [e.target.id]: e.target.value, // podle id se funkce přepne buď na email nebo password a takto můžeme připsat do formData další věci a používat to stejně dokud v inputu bude id, které určí type inputu a tím pádem se bude ukládat do formData
-      }))
-   }
+  const onChange = (e) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      [e.target.id]: e.target.value, // podle id se funkce přepne buď na email nebo password a takto můžeme připsat do formData další věci a používat to stejně dokud v inputu bude id, které určí type inputu a tím pádem se bude ukládat do formData
+    }));
+  };
 
-   const onSubmit = async (e) => {
-      e.preventDefault()
+  const onSubmit = async (e) => {
+    e.preventDefault();
 
-      try {
-         const auth = getAuth() // from firebase docs authentication/Sign up new users
+    try {
+      const auth = getAuth(); // from firebase docs authentication/Sign up new users
 
-         const userCredential = await createUserWithEmailAndPassword(
-            auth,
-            email,
-            password
-         )
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
 
-         const user = userCredential.user
+      const user = userCredential.user;
 
-         updateProfile(auth.currentUser, {
-            displayName: name,
-         })
+      updateProfile(auth.currentUser, {
+        displayName: name,
+      });
 
-         // Copy data from formData to formDataCopy, delete from it password, so only username and email is left and then adding timestamp from function serverTimestamp() imported from firebase
-         const formDataCopy = { ...formData }
-         delete formDataCopy.password
-         formDataCopy.timestamp = serverTimestamp()
+      // Copy data from formData to formDataCopy, delete from it password, so only username and email is left and then adding timestamp from function serverTimestamp() imported from firebase
+      const formDataCopy = { ...formData };
+      delete formDataCopy.password;
+      formDataCopy.timestamp = serverTimestamp();
 
-         // setDoc is creating and updating database and adding user to the users collection (name, email, uid)
-         await setDoc(doc(db, "users", user.uid), formDataCopy)
+      // setDoc is creating and updating database and adding user to the users collection (name, email, uid)
+      await setDoc(doc(db, "users", user.uid), formDataCopy);
 
-         navigate("/")
-      } catch (error) {
-         toast.error("Something went wrong with registration")
-      }
-   }
+      navigate("/");
+    } catch (error) {
+      toast.error("Something went wrong with registration");
+    }
+  };
 
-   return (
-      <>
-         <div className="pageContainer">
-            <header>
-               <p className="pageHeader">Welcome Back!</p>
-            </header>
+  return (
+    <>
+      <div className="pageContainer">
+        <div className="signCard">
+          <header>
+            <p className="pageHeader">Welcome Back!</p>
+          </header>
 
-            <main>
-               <form onSubmit={onSubmit}>
-                  <input
-                     type="text"
-                     className="nameInput"
-                     placeholder="Name"
-                     id="name"
-                     value={name}
-                     onChange={onChange}
-                  />
+          <main>
+            <form onSubmit={onSubmit}>
+              <input
+                type="text"
+                className="nameInput"
+                placeholder="Name"
+                id="name"
+                value={name}
+                onChange={onChange}
+              />
 
-                  <input
-                     type="email"
-                     className="emailInput"
-                     placeholder="Email"
-                     id="email"
-                     value={email}
-                     onChange={onChange}
-                  />
+              <input
+                type="email"
+                className="emailInput"
+                placeholder="Email"
+                id="email"
+                value={email}
+                onChange={onChange}
+              />
 
-                  <div className="passwordInputDiv">
-                     <input
-                        type={showPassword ? "text" : "password"}
-                        className="passwordInput"
-                        placeholder="Password"
-                        id="password"
-                        value={password}
-                        onChange={onChange}
-                     />
-                     <img
-                        src={visibilityIcon}
-                        alt="show password"
-                        className="showPassword"
-                        onClick={() =>
-                           setShowPassword((prevState) => !prevState)
-                        }
-                     />
-                  </div>
+              <div className="passwordInputDiv">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  className="passwordInput"
+                  placeholder="Password"
+                  id="password"
+                  value={password}
+                  onChange={onChange}
+                />
+                <img
+                  src={visibilityIcon}
+                  alt="show password"
+                  className="showPassword"
+                  onClick={() => setShowPassword((prevState) => !prevState)}
+                />
+              </div>
 
-                  <Link to="/forgot-password" className="forgotPasswordLink">
-                     Forgot Password
-                  </Link>
+              <Link to="/forgot-password" className="forgotPasswordLink">
+                Forgot Password
+              </Link>
 
-                  <div className="signUpBar">
-                     <p className="signUpText">Sign Up</p>
-                     <button className="signUpButton">
-                        <ArrowRightIcon
-                           fill="#ffffff"
-                           width="34px"
-                           height="34px"
-                        />
-                     </button>
-                  </div>
-               </form>
+              <div className="signUpBar">
+                <p className="signUpText">Sign Up</p>
+                <button className="signUpButton">
+                  <ArrowRightIcon fill="#ffffff" width="34px" height="34px" />
+                </button>
+              </div>
+            </form>
 
-               <OAuth />
+            <OAuth />
 
-               <Link to="/sign-in" className="registerLink">
-                  Sign In Instead
-               </Link>
-            </main>
-         </div>
-      </>
-   )
+            <Link to="/sign-in" className="registerLink">
+              Sign In Instead
+            </Link>
+          </main>
+        </div>
+      </div>
+    </>
+  );
 }
 
-export default SignUp
+export default SignUp;
