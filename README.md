@@ -1,8 +1,15 @@
 # House Marketplace
 
-Find and list houses for sale or for rent. This is a React / Firebase v9 project from the React Front To Back 2022 course.
+This is a React / Firebase v9 project from the React Front To Back 2022 course.
 
 ## Usage
+
+- Create offer
+- Contact Landlord
+- Register
+- Log-in
+- Google OAuth
+- Everything is stored in Firebase Database
 
 ### Geolocation
 
